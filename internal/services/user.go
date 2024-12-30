@@ -10,9 +10,9 @@ import (
 	"github.com/gustyaguero21/Go-toolkit/pkg/validator"
 )
 
-type UserService struct{}
+type Service struct{}
 
-func (us *UserService) CreateUser(ctx context.Context, user models.User) (createdUser models.User, err error) {
+func (s *Service) CreateUser(ctx context.Context, user models.User) (createdUser models.User, err error) {
 
 	if !validator.ValidateEmail(user.Email) {
 		return models.User{}, errors.New("invalid email address")
