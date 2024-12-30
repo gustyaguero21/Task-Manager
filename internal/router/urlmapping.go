@@ -1,7 +1,8 @@
 package router
 
 import (
-	"net/http"
+	"task-manager-app/internal/handlers"
+	"task-manager-app/internal/services"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,7 +10,9 @@ import (
 func UrlMapping(r *gin.Engine) {
 	api := r.Group("/api/task-manager")
 
-	api.POST("/ping", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "pong")
-	})
+	userService := services.Service{}
+	handler := handlers.Handler(&userService)
+
+	api.POST("/create", handler.Create)
+
 }
