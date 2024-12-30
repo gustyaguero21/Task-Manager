@@ -6,6 +6,7 @@ import (
 	"task-manager-app/internal/services"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gustyaguero21/Go-toolkit/pkg/web"
 )
 
 type UserHandler struct {
@@ -23,20 +24,21 @@ func (uh *UserHandler) Create(ctx *gin.Context) {
 	var user models.User
 
 	if err := ctx.ShouldBindJSON(&user); err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
+		web.NewError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	if user.Name == "" || user.Surname == "" || user.Email == "" || user.Password == "" {
-		ctx.JSON(http.StatusBadRequest, "empty params")
+		web.NewError(ctx, http.StatusBadRequest, "empty params")
 		return
 	}
 
 	created, createdErr := uh.userService.CreateUser(ctx, user)
 	if createdErr != nil {
-		ctx.JSON(http.StatusInternalServerError, "error creating user. "+createdErr.Error())
+		web.NewError(ctx, http.StatusInternalServerError, "error creating user "+createdErr.Error())
 		return
 	}
+
 	ctx.JSON(http.StatusCreated, createUserResponse(http.StatusOK, "success", created))
 }
 
