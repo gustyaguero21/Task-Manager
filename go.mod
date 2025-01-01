@@ -4,8 +4,9 @@ go 1.23.4
 
 require (
 	github.com/gin-gonic/gin v1.10.0
+	github.com/go-playground/assert/v2 v2.2.0
 	github.com/google/uuid v1.6.0
-	github.com/gustyaguero21/Go-toolkit v1.0.1
+	github.com/gustyaguero21/Go-toolkit v1.0.3
 	github.com/stretchr/testify v1.10.0
 )
 
