@@ -29,7 +29,7 @@ func (uh *UserHandler) Create(ctx *gin.Context) {
 	}
 
 	if user.Name == "" || user.Surname == "" || user.Email == "" || user.Password == "" {
-		web.NewError(ctx, http.StatusBadRequest, "empty params")
+		web.NewError(ctx, http.StatusBadRequest, "all fields are required")
 		return
 	}
 

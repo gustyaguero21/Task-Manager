@@ -1,22 +1,15 @@
 package utils
 
 import (
-	"encoding/json"
-	"fmt"
 	"os"
 )
 
-func OpenMock[T any](path string) (T, error) {
-	var result T
+func OpenMock(path string) []byte {
 
-	bytes, err := os.ReadFile(path)
-	if err != nil {
-		return result, fmt.Errorf("error reading json file: %w", err)
+	readFile, readErr := os.ReadFile(path)
+	if readErr != nil {
+		return nil
 	}
+	return readFile
 
-	if err := json.Unmarshal(bytes, &result); err != nil {
-		return result, fmt.Errorf("error parsing data: %w", err)
-	}
-
-	return result, nil
 }
