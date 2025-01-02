@@ -6,7 +6,7 @@ import (
 	"task-manager-app/internal/services"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gustyaguero21/Go-toolkit/pkg/web"
+	"github.com/gustyaguero21/Go-Core/pkg/web"
 )
 
 type UserHandler struct {
