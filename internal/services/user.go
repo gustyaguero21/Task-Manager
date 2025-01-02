@@ -6,8 +6,8 @@ import (
 	"task-manager-app/internal/models"
 
 	"github.com/google/uuid"
-	"github.com/gustyaguero21/Go-toolkit/pkg/encrypter"
-	"github.com/gustyaguero21/Go-toolkit/pkg/validator"
+	"github.com/gustyaguero21/Go-Core/pkg/encrypter"
+	"github.com/gustyaguero21/Go-Core/pkg/validator"
 )
 
 type Service struct{}
