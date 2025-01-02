@@ -2,66 +2,43 @@ package services
 
 import (
 	"context"
+	"errors"
 	"task-manager-app/internal/models"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateUser_Ok(t *testing.T) {
-	//given
+func TestCreate(t *testing.T) {
 	ctx := context.Background()
-	service := &Service{}
-	user := models.User{
-		Name:     "John",
-		Surname:  "Doe",
-		Email:    "johndoe@example.com",
-		Password: "Password1234",
+	service := Service{}
+
+	tests := []struct {
+		Name          string
+		User          models.User
+		ExpectedError error
+	}{
+		{
+			Name:          "Success",
+			User:          models.User{Name: "John", Surname: "Doe", Email: "johndoe@example.com", Password: "Password1234"},
+			ExpectedError: nil,
+		},
+		{
+			Name:          "Invalid email",
+			User:          models.User{Name: "John", Surname: "Doe", Email: "johndoeexample.com", Password: "Password1234"},
+			ExpectedError: errors.New("invalid email address"),
+		},
+		{
+			Name:          "Invalid password",
+			User:          models.User{Name: "John", Surname: "Doe", Email: "johndoe@example.com", Password: "password1234"},
+			ExpectedError: errors.New("invalid password"),
+		},
 	}
+	for _, tt := range tests {
+		t.Run(tt.Name, func(t *testing.T) {
+			_, err := service.CreateUser(ctx, tt.User)
 
-	//act
-
-	created, err := service.CreateUser(ctx, user)
-
-	//assert
-
-	assert.Nil(t, err)
-	assert.NotNil(t, created)
-}
-
-func TestInvalid_Email(t *testing.T) {
-	//given
-	ctx := context.Background()
-	service := &Service{}
-	user := models.User{
-		Name:     "John",
-		Surname:  "Doe",
-		Email:    "johndoe",
-		Password: "Password1234",
+			assert.Equal(t, tt.ExpectedError, err)
+		})
 	}
-
-	//act
-	_, err := service.CreateUser(ctx, user)
-
-	//assert
-	assert.Error(t, err)
-
-}
-func TestInvalid_Password(t *testing.T) {
-	//given
-	ctx := context.Background()
-	service := &Service{}
-	user := models.User{
-		Name:     "John",
-		Surname:  "Doe",
-		Email:    "johndoe@example.com",
-		Password: "password1234",
-	}
-
-	//act
-	_, err := service.CreateUser(ctx, user)
-
-	//assert
-	assert.Error(t, err)
-
 }
